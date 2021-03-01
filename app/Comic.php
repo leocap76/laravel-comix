@@ -6,6 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comic extends Model
 {
+    protected $fillable = [
+        'category_id',
+        'image',
+        'image_hero',
+        'image_cover',
+        'title',
+        'price',
+        'body'
+    ];
     //relazione una a molti
     public function category() {
         return $this->belongsTo('App/Category');
