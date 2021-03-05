@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dc Comics</title>
+    <title>Dc Comics mail</title>
 </head>
 <body>
     <h1>{{ $comic->title}}</h1>

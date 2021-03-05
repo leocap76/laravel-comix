@@ -12,6 +12,7 @@ class Comic extends Model
         'image_hero',
         'image_cover',
         'title',
+        'slug',
         'price',
         'body'
     ];

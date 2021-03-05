@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 
 use App\Category;
 use App\Comic;
+use App\Character;
 
 use App\Mail\ComicMail;
 use Illuminate\Support\Facades\Mail;
@@ -44,8 +45,9 @@ class ComicController extends Controller
     {
         $title = 'Crea un nuovo fumetto';
         $categories = Category::all();
+        $characters = Character::all();
 
-        return view('admin.comics.create', compact('title', 'categories' ));
+        return view('admin.comics.create', compact('title', 'categories', 'characters' ));
     }
 
     /**
@@ -75,8 +77,15 @@ class ComicController extends Controller
         $newComic->fill($data);
         $saved = $newComic->save();
 
+        
+
         if($saved) {
-            Mail::to('pippo@gmail.com')->send(new ComicMail($newComic));
+            if(!empty($data["characters"])) {
+                $newComic->characters()->attach($data["characters"]);
+            }
+
+            // Mail::to('pippo@gmail.com')->send(new ComicMail($newComic));
+
             return redirect()
                 ->route('admin.comics.index')
                 ->with('message', "fumetto" . $newComic->title . "creato correttamente");
@@ -96,9 +105,10 @@ class ComicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id) // Comic $comic  se non avessi dato il nome comiX biding implicito = magia laravel
     {
-        //
+        $comic = Comic::findOrFail($id);
+        return view('admin.comics.show', compact('comic'));
     }
 
     /**
@@ -108,8 +118,13 @@ class ComicController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
+
     {
-        //
+        $categories = Category::all();
+        $characters = Character::all();
+
+        $comic = Comic::findOrFail($id);
+        return view('admin.comics.edit', compact('comic','categories', 'characters'));
     }
 
     /**

@@ -31,3 +31,6 @@ Route::prefix('admin')
     
 
 // Route::resource('comics', 'ComicController'); //rotta per la crud publica
+
+Route::get('');
+Route::get('');
